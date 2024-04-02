@@ -8,9 +8,7 @@ export default function Index() {
 					<span className="font-display text-lg text-text-primary">
 						abraham aguilera
 					</span>
-					<h1 className="not-prose text-text-secondary">
-						Design Engineer & Founder
-					</h1>
+					<h1 className="not-prose text-text-secondary">Design Engineer</h1>
 				</header>
 				<section className=" mt-6 flex flex-col">
 					<h2>Now</h2>
