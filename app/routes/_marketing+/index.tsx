@@ -59,7 +59,7 @@ export default function Index() {
 					</dl>
 				</section>
 				<section className="-ml-1 mt-12 flex gap-1">
-					<SocialLink href="https://x.com/abraaguilera" name="x.com">
+					<SocialLink href="https://x.com/abraguilera" name="x.com">
 						<Xcom className="size-5" />
 					</SocialLink>
 					<SocialLink href="https://github.com/a-redbourbon" name="github">

@@ -61,6 +61,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 	return [
 		{ title: data ? 'Abraham Aguilera' : 'Error | Abraham Aguilera' },
 		{ name: 'description', content: `Design Engineer & Founder` },
+		{ name: 'theme-color', content: '#09090b' },
 	]
 }
 
