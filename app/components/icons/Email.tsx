@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const SvgEmail = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 44 44" className={props.className} role="img" {...props}><path fill="currentColor" fillRule="evenodd" d="M9.167 10.542a2.29 2.29 0 0 0-2.292 2.291v18.334a2.29 2.29 0 0 0 2.292 2.291h25.666a2.29 2.29 0 0 0 2.292-2.291V12.833a2.29 2.29 0 0 0-2.292-2.291zM5.602 9.268a5.04 5.04 0 0 1 3.565-1.476h25.666a5.04 5.04 0 0 1 5.042 5.041v18.334a5.04 5.04 0 0 1-5.042 5.041H9.167a5.04 5.04 0 0 1-5.042-5.041V12.833c0-1.337.531-2.62 1.477-3.565" clipRule="evenodd" /><path fill="currentColor" fillRule="evenodd" d="M4.356 12.07a1.375 1.375 0 0 1 1.907-.38L22 22.18l15.737-10.49a1.375 1.375 0 1 1 1.526 2.287l-16.5 11a1.375 1.375 0 0 1-1.526 0l-16.5-11a1.375 1.375 0 0 1-.381-1.906" clipRule="evenodd" /></svg>;
+export default SvgEmail;

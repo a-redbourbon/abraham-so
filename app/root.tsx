@@ -177,7 +177,7 @@ function Document({
 				<meta name="viewport" content="width=device-width,initial-scale=1" />
 				<Links />
 			</head>
-			<body className="text-foreground bg-background">
+			<body className="bg-background text-text-primary">
 				{children}
 				<script
 					nonce={nonce}

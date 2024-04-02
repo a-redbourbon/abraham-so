@@ -1,5 +1,7 @@
 import { useSearchParams } from '@remix-run/react'
-import { useState } from 'react'
+import clsx from 'clsx'
+import { useInView } from 'framer-motion'
+import { useRef, useState } from 'react'
 import Carousel, { type CarouselImage } from '#app/components/carousel'
 import { XMark } from '#app/components/icons'
 import ReaderPicker from '#app/components/tailwind-application/reader-picker'
@@ -21,28 +23,34 @@ export const READERS = {
 
 const CAROUSEL_1_IMAGES: CarouselImage[] = [
 	{
-		title: 'Spine AI',
-		src: '/img/tw/carousel-1/spine-ai.webp',
-		alt: 'Spine AI Website Design',
-		link: 'https://getspine.ai',
-	},
-	{
-		title: 'State of Retention 2024',
-		src: '/img/tw/carousel-1/sor-2024.webp',
-		alt: 'State of Retention 2024 Website Design',
-		link: 'https://churnkey.co/reports/state-of-retention-2024/',
-	},
-	{
 		title: 'Plot App',
 		src: '/img/tw/carousel-1/plot-app.webp',
 		alt: 'Plot App Website Design',
 		link: 'https://getplot.app',
 	},
 	{
+		title: 'Vapor.Codes',
+		src: '/img/tw/carousel-1/vapor-codes.webp',
+		alt: 'Vapor.Codes Website Redesign',
+	},
+	{
+		title: 'Spine AI',
+		src: '/img/tw/carousel-1/spine-ai.webp',
+		alt: 'Spine AI Website Design',
+		link: 'https://getspine.ai',
+	},
+
+	{
 		title: 'Powered by Tiny',
 		src: '/img/tw/carousel-1/powered-by-tiny.webp',
 		alt: 'Powered by Tiny Website Design',
 		link: 'https://poweredbytiny.com',
+	},
+	{
+		title: 'State of Retention 2024',
+		src: '/img/tw/carousel-1/state-of-retention.webp',
+		alt: 'State of Retention 2024 Website Design',
+		link: 'https://churnkey.co/reports/state-of-retention-2024/',
 	},
 ]
 
@@ -56,12 +64,15 @@ export default function TailwindRoute() {
 	const [reader, setReader] = useState<Reader>(
 		isValidReader ? (urlReader as Reader) : 'adam',
 	)
+	const headerMarkerRef = useRef<HTMLDivElement>(null)
+
+	const isHeaderInView = useInView(headerMarkerRef, { margin: '-110px' })
 
 	return (
-		<div className="relative min-h-screen text-white">
-			<header className="sticky top-0 z-0 flex h-[40vh] min-h-72 w-full items-center justify-center">
+		<main className="relative min-h-screen w-full px-3 text-white">
+			<header className="sticky top-0 z-0 -ml-3 flex h-[40vh] min-h-72 w-dvw items-center justify-center overflow-hidden md:overflow-visible">
 				{
-					<div className="absolute -top-56 left-1/2 -translate-x-1/2 md:w-[1440px]">
+					<div className="absolute -top-24 left-1/2 w-[768px] -translate-x-1/2 md:-top-56 md:w-[1440px]">
 						<img
 							src="/img/tw-logo-bg.webp"
 							alt=""
@@ -76,9 +87,14 @@ export default function TailwindRoute() {
 				}
 				{/* <TailwindBackground className="tailwind-logo absolute-center z-0 w-[1440px] text-background" /> */}
 
-				<div className="z-10 mb-24 flex items-center gap-2">
+				<div
+					className={clsx(
+						'z-10 mb-24 flex flex-col items-center gap-1 opacity-0 transition-opacity duration-500 md:flex-row md:gap-2',
+						isHeaderInView && 'opacity-100',
+					)}
+				>
 					<h1
-						className="bg-gradient-to-b from-white to-gray-300 bg-clip-text font-display text-5xl font-normal text-transparent drop-shadow-[0_0px_1px_rgb(0_0_0)]
+						className="bg-gradient-to-b from-white to-gray-300 bg-clip-text font-display text-4xl font-normal leading-none text-transparent drop-shadow-[0_0px_1px_rgb(0_0_0)] md:text-5xl
 "
 					>
 						Abraham
@@ -88,20 +104,26 @@ export default function TailwindRoute() {
 					<img
 						src="/img/tailwindcss-logotype-white 1.webp"
 						alt="tailwind logotype"
-						className="w-full max-w-[276px]"
+						className="mt-1 w-3/4 max-w-[276px] md:mt-0 md:w-full"
 					/>
 				</div>
 			</header>
 			<section className="relative -mt-32 flex flex-col pb-28">
-				<div className="sticky top-4 z-20 flex justify-center">
+				<div
+					className="pointer-events-none h-1 w-full"
+					ref={headerMarkerRef}
+					aria-hidden
+					role="separator"
+				/>
+				<div className="sticky top-6 z-20 flex justify-center">
 					<ReaderPicker reader={reader} setReader={setReader} />
 				</div>
-				<div className="prose prose-zinc relative z-10 m-auto  mt-6 w-full max-w-screen-md rounded-md bg-white p-6 shadow-[0_0_0_1px_rgb(0_0_0_/_5%)_,_0_1px_2px_0_rgb(0_0_0_/_10%)_,_inset_0_0.5px_0_0.5px_rgb(255_255_255_/_5%),_inset_0_-1px_3px_0px_rgb(0_0_0_/_5%)] dark:prose-invert prose-headings:font-display prose-headings:font-normal dark:bg-gray-900 md:p-12">
-					<p>Hi {READERS[reader].name}!</p>
+				<div className="prose prose-zinc relative z-10 m-auto mt-6  w-full max-w-screen-md rounded-md bg-white p-6 shadow-[0_0_0_1px_rgb(0_0_0_/_5%)_,_0_1px_2px_0_rgb(0_0_0_/_10%)_,_inset_0_0.5px_0_0.5px_rgb(255_255_255_/_5%),_inset_0_-1px_3px_0px_rgb(0_0_0_/_5%)] dark:prose-invert prose-headings:font-display prose-headings:text-xl prose-headings:font-normal dark:bg-gray-900 md:p-12">
+					<p>Hey {READERS[reader].name}!</p>
 					<p>
 						Rather than boring you with a formal intro and a Linkedin do-over
 						with all my job titles, I thought I'd make a short video to
-						introduce myself 👇
+						introduce myself:
 					</p>
 					<span>[video]</span>
 					<p>
@@ -111,13 +133,13 @@ export default function TailwindRoute() {
 					<h2>1. Tailwind got me to stop using Figma</h2>
 					<p>
 						After being a long-time addict to Figma and drawing rectangles for
-						15 years, Tailwind helped me see the light. For my upcoming app,
-						I've done all the design in code, and it's awesome. Figma has been
-						struggling to catch up ever since. The design is coming together
-						nicely too (if I say so myself):
+						the past 12 years, Tailwind helped me see the light. For an upcoming
+						app I've been building, I've done all the design with Tailwind, in
+						code. And it's awesome.
+						<p>Figma has been struggling to catch up ever since.</p>
 					</p>
-					<p>[ pics ]</p>
-					<h2>2. I've done stuff</h2>
+					<Section1Graphics />
+					<h2>2. I've done *a lot* of things</h2>
 					<p>
 						I have an unconventional trajectory as a founder and a consultant.
 						I've worked in all areas of marketing, design, visual development,
@@ -125,23 +147,30 @@ export default function TailwindRoute() {
 					</p>
 					<p>
 						So, besides having strong suspicions of ADHD, I'm a generalist with
-						experience across multiple industries and in all kinds of areas of
-						execution.
+						experience across multiple industries (health, tech, finance,
+						ecommerce, consumer and b2b SaaS, DevTools...)
 					</p>
-					<p>
-						I'll bring to the team a broad vision, strong empathy with many
-						different types of Tailwind's users and potential applications, and
-						a wide range of skills (from paid ads, copywriting, product design,
-						photography, videography...) on top of my frontend and backend dev
-						skills.
-					</p>
+					<p>I'll bring to the team:</p>
+					<ul>
+						<li>A broad vision, owning each project like a founder would.</li>
+						<li>
+							Strong empathy with many different types of Tailwind's users and
+							potential implementations after building marketing sites and
+							products on so many different markets.
+						</li>
+						<li>
+							A wide range of complementary skills: marketing, copywriting,
+							product design, CRO, photography and videography on top of
+							frontend development.
+						</li>
+					</ul>
 					<h2>3. A strong passion for craft</h2>
 					<p>
 						This one is a bit more esoteric and hard to explain, but I hope it
-						comes through on this page. I'm really grateful for the work you've
-						done with Tailwind, and helping you build the tools that make
-						building high-quality looking sites _this_ enjoyable would be a
-						highlight in my career.
+						comes through on this page. I'm grateful for the work you've done
+						with Tailwind, and helping you create the tools that make building
+						high-quality looking sites _this_ enjoyable would be a highlight in
+						my career.
 					</p>
 					<h2>Bonus: Why would enjoy working with me</h2>
 					<p>
@@ -156,9 +185,18 @@ export default function TailwindRoute() {
 						kidding, but I will try very hard.
 					</p>
 				</div>
-				<Carousel images={CAROUSEL_1_IMAGES} className="my-12" />
-				<div className="fixed bottom-0 z-20 h-28 w-full bg-gradient-to-t from-gray-950" />
+				<div className="mx-auto my-12 w-full max-w-screen-md overflow-hidden md:overflow-visible">
+					<h2 className="mb-6 text-center font-display text-2xl">
+						Some recent projects
+					</h2>
+					<Carousel images={CAROUSEL_1_IMAGES} className="" />
+				</div>
+				<div className="fixed -bottom-4 -left-[10vw] z-40 h-28 w-[120vw] bg-gradient-to-t from-gray-950 blur-sm" />
 			</section>
-		</div>
+		</main>
 	)
+}
+
+function Section1Graphics() {
+	return <div className="flex w-full flex-col gap-4 md:flex-row"></div>
 }
