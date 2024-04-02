@@ -1,7 +1,6 @@
 import { Form } from '@remix-run/react'
 import { z } from 'zod'
 import { Icon } from '#app/components/ui/icon.tsx'
-import { useIsPending } from './misc.tsx'
 
 export const GITHUB_PROVIDER_NAME = 'github'
 // to add another provider, set their name here and add it to the providerNames below
