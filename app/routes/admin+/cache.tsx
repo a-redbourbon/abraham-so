@@ -3,8 +3,8 @@ import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import {
 	json,
 	redirect,
-	type LoaderFunctionArgs,
 	type ActionFunctionArgs,
+	type LoaderFunctionArgs,
 } from '@remix-run/node'
 import {
 	Form,
@@ -17,7 +17,6 @@ import {
 import { GeneralErrorBoundary } from '#app/components/error-boundary'
 import { Field } from '#app/components/forms.tsx'
 import { Spacer } from '#app/components/spacer.tsx'
-import { Button } from '#app/components/ui/button.tsx'
 import {
 	cache,
 	getAllCacheKeys,
@@ -128,7 +127,7 @@ export default function CacheAdminRoute() {
 								defaultValue: query,
 							}}
 						/>
-						<div className="flex h-16 w-14 items-center text-lg font-medium text-muted-foreground">
+						<div className="text-muted-foreground flex h-16 w-14 items-center text-lg font-medium">
 							<span title="Total results shown">
 								{data.cacheKeys.sqlite.length + data.cacheKeys.lru.length}
 							</span>
@@ -217,17 +216,13 @@ function CacheKeyRow({
 				<input type="hidden" name="cacheKey" value={cacheKey} />
 				<input type="hidden" name="instance" value={instance} />
 				<input type="hidden" name="type" value={type} />
-				<Button
-					size="sm"
-					variant="secondary"
-					{...dc.getButtonProps({ type: 'submit' })}
-				>
+				<button {...dc.getButtonProps({ type: 'submit' })}>
 					{fetcher.state === 'idle'
 						? dc.doubleCheck
 							? 'You sure?'
 							: 'Delete'
 						: 'Deleting...'}
-				</Button>
+				</button>
 			</fetcher.Form>
 			<Link reloadDocument to={valuePage}>
 				{cacheKey}
