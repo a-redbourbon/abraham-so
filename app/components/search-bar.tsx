@@ -1,10 +1,9 @@
 import { Form, useSearchParams, useSubmit } from '@remix-run/react'
 import { useId } from 'react'
-import { useDebounce, useIsPending } from '#app/utils/misc.tsx'
+import { useDebounce } from '#app/utils/misc.tsx'
 import { Icon } from './ui/icon.tsx'
 import { Input } from './ui/input.tsx'
 import { Label } from './ui/label.tsx'
-import { StatusButton } from './ui/status-button.tsx'
 
 export function SearchBar({
 	status,
@@ -18,10 +17,6 @@ export function SearchBar({
 	const id = useId()
 	const [searchParams] = useSearchParams()
 	const submit = useSubmit()
-	const isSubmitting = useIsPending({
-		formMethod: 'GET',
-		formAction: '/users',
-	})
 
 	const handleFormChange = useDebounce((form: HTMLFormElement) => {
 		submit(form)
@@ -49,14 +44,13 @@ export function SearchBar({
 				/>
 			</div>
 			<div>
-				<StatusButton
+				<button
 					type="submit"
-					status={isSubmitting ? 'pending' : status}
 					className="flex w-full items-center justify-center"
 				>
 					<Icon name="magnifying-glass" size="md" />
 					<span className="sr-only">Search</span>
-				</StatusButton>
+				</button>
 			</div>
 		</Form>
 	)
