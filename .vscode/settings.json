@@ -15,5 +15,6 @@
   ],
   "workbench.editorAssociations": {
     "*.db": "sqlite-viewer.view"
-  }
+  },
+  "workbench.colorTheme": "Linear Theme - Dark"
 }

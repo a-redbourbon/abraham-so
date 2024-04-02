@@ -2,7 +2,7 @@ import { useFormAction, useNavigation } from '@remix-run/react'
 import { clsx, type ClassValue } from 'clsx'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useSpinDelay } from 'spin-delay'
-import { extendTailwindMerge } from 'tailwind-merge'
+import { twMerge } from 'tailwind-merge'
 import { extendedTheme } from './extended-theme.ts'
 
 export function getUserImgSrc(imageId?: string | null) {
@@ -27,7 +27,7 @@ export function getErrorMessage(error: unknown) {
 	return 'Unknown Error'
 }
 
-function formatColors() {
+export function formatColors() {
 	const colors = []
 	for (const [key, color] of Object.entries(extendedTheme.colors)) {
 		if (typeof color === 'string') {
@@ -42,24 +42,8 @@ function formatColors() {
 	return colors
 }
 
-const customTwMerge = extendTailwindMerge<string, string>({
-	extend: {
-		theme: {
-			colors: formatColors(),
-			borderRadius: Object.keys(extendedTheme.borderRadius),
-		},
-		classGroups: {
-			'font-size': [
-				{
-					text: Object.keys(extendedTheme.fontSize),
-				},
-			],
-		},
-	},
-})
-
 export function cn(...inputs: ClassValue[]) {
-	return customTwMerge(clsx(inputs))
+	return twMerge(clsx(inputs))
 }
 
 export function getDomainUrl(request: Request) {
