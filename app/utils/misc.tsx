@@ -1,6 +1,7 @@
 import { useFormAction, useNavigation } from '@remix-run/react'
 import { clsx, type ClassValue } from 'clsx'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { useHydrated } from 'remix-utils/use-hydrated'
 import { useSpinDelay } from 'spin-delay'
 import { twMerge } from 'tailwind-merge'
 import { extendedTheme } from './extended-theme.ts'
@@ -270,4 +271,31 @@ export async function downloadFile(url: string, retries: number = 0) {
 		if (retries > MAX_RETRIES) throw e
 		return downloadFile(url, retries + 1)
 	}
+}
+
+export const useIsMobile = ({ breakpoint }: { breakpoint: number }) => {
+	const isHydrated = useHydrated()
+	const query = isHydrated ? matchMedia(`(max-width:${breakpoint}px)'`) : null
+
+	const [isMobile, setIsMobile] = useState<boolean | null>(
+		query ? query.matches : null,
+	)
+
+	useEffect(() => {
+		if (!query) return
+
+		const handleChange = (e: MediaQueryListEvent) => {
+			setIsMobile(e.matches)
+		}
+
+		query.addEventListener('change', handleChange)
+
+		// Cleanup function
+		return () => {
+			query.removeEventListener('change', handleChange)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
+	return isMobile
 }
