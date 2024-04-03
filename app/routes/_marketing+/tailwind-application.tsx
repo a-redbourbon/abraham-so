@@ -1,5 +1,6 @@
 import { Disclosure, Transition } from '@headlessui/react'
 import { BoltIcon, ChevronDownIcon } from '@heroicons/react/20/solid'
+import { type MetaFunction } from '@remix-run/node'
 import { useSearchParams } from '@remix-run/react'
 import clsx from 'clsx'
 import { useInView } from 'framer-motion'
@@ -58,6 +59,16 @@ const CAROUSEL_1_IMAGES: CarouselImage[] = [
 	},
 ]
 
+export const meta: MetaFunction = () => {
+	return [
+		{ title: 'Abraham x TailwindLabs – Abraham Aguilera' },
+		{
+			name: 'description',
+			content: `Here's why I think I'd be a great addition to Tailwind's team`,
+		},
+	]
+}
+
 export type Reader = keyof typeof READERS
 
 export default function TailwindRoute() {
@@ -98,7 +109,7 @@ export default function TailwindRoute() {
 					)}
 				>
 					<h1
-						className="bg-gradient-to-b from-white to-gray-300 bg-clip-text font-display text-4xl font-normal leading-none text-transparent drop-shadow-[0_0px_1px_rgb(0_0_0)] md:text-5xl
+						className="bg-gradient-to-b from-white to-gray-300 bg-clip-text font-display text-4xl font-normal leading-none text-transparent drop-shadow-[0_0px_1px_rgb(0_0_0)] md:text-4xl
 "
 					>
 						Abraham
@@ -183,11 +194,10 @@ export default function TailwindRoute() {
 
 					<h2>3. A strong passion for craft</h2>
 					<p>
-						This one is a bit more esoteric and hard to explain, but I hope it
-						comes through on this page. I'm grateful for the work you've done
-						with Tailwind, and helping you create the tools that make building
-						high-quality looking sites _this_ enjoyable would be a highlight in
-						my career.
+						The same as I've felt across every touchpoint with the Tailwind
+						brand. Your love of craftmanship and care for even the smallest
+						detail shines across every product you crate, and that's the type of
+						work I want to be doing every day.
 					</p>
 					<hr />
 					<BonusSection reader={reader} />
@@ -226,8 +236,8 @@ function BonusSection({ reader }: { reader: Reader }) {
 	return (
 		<div className="pb-12 sm:pb-4">
 			<Disclosure>
-				<Disclosure.Button className="flex w-full items-center justify-between gap-2 ">
-					<div className="flex items-center gap-2 prose-h2:m-0">
+				<Disclosure.Button className="items-top flex w-full justify-between gap-2 ">
+					<div className="items-top flex gap-2 prose-h2:m-0">
 						<div className="flex size-7 shrink-0 items-center justify-center rounded-full border border-gray-800 bg-white/[2%]">
 							<BoltIcon className="size-4 shrink-0 text-gray-500 drop-shadow-sm" />
 						</div>

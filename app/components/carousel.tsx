@@ -5,6 +5,7 @@ import {
 	MotionConfig,
 	motion,
 	type Transition,
+	useMotionValue,
 } from 'framer-motion'
 import { useState } from 'react'
 import { cn } from '#app/utils/misc'
@@ -28,14 +29,39 @@ export default function Carousel({
 
 	const margin = 5
 	const transition: Transition = { duration: 0.7, ease: [0.32, 0.72, 0, 1] }
+
+	const dragX = useMotionValue(0)
+
+	const DRAG_BUFFER = 25
+
+	const onDragEnd = () => {
+		const x = dragX.get()
+
+		if (x > DRAG_BUFFER && index > 0) {
+			const nextIndex = index - 1
+			setIndex(nextIndex)
+			console.log('index', index)
+		}
+		if (x <= -DRAG_BUFFER && index < images.length - 1) {
+			const nextIndex = index + 1
+			setIndex(nextIndex)
+			console.log('index', index)
+		}
+	}
+
 	return (
 		<MotionConfig transition={transition}>
 			<div className={cn('relative isolate w-full', className)}>
 				<div className="pb-1/2 h-96 w-full overflow-hidden p-px">
 					<div className="relative z-10 flex h-96">
 						<motion.div
-							animate={{ x: `-${index * 100 + margin * index}%` }}
-							className="relative flex aspect-[2/3] w-3/4 pb-1 sm:w-[calc(50%-(1.25%))]"
+							drag="x"
+							dragConstraints={{ left: 0, right: 0 }}
+							dragMomentum={false}
+							animate={{ translateX: `-${index * 100 + margin * index}%` }}
+							className="relative flex w-3/4 pb-1 sm:w-[calc(50%-(1.25%))]"
+							style={{ x: dragX }}
+							onDragEnd={onDragEnd}
 						>
 							{images.map((image, i) => (
 								<div
@@ -45,18 +71,16 @@ export default function Carousel({
 								>
 									<button
 										onClick={() => {
-											if (i < images.length - 2) {
-												setIndex(i)
-											} else {
-												setIndex(images.length - 3)
-											}
+											setIndex(i)
 										}}
 										className="w-full grow overflow-hidden"
 									>
 										<img
 											src={image.src}
 											alt={image.alt}
-											className={cn('w-full object-cover align-top')}
+											className={cn(
+												'pointer-events-none w-full object-cover align-top',
+											)}
 										/>
 									</button>
 									<div className="flex h-12 shrink-0 items-center p-2 pl-3 text-sm ">
