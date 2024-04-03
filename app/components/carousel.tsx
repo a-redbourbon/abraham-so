@@ -6,8 +6,10 @@ import {
 	motion,
 	type Transition,
 	useMotionValue,
+	useInView,
 } from 'framer-motion'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import useKeypress from 'react-use-keypress'
 import { cn } from '#app/utils/misc'
 import { Button } from './ui/button'
 
@@ -26,6 +28,21 @@ export default function Carousel({
 	className?: string
 }) {
 	const [index, setIndex] = useState<number>(0)
+	const carouselRef = useRef<HTMLDivElement>(null)
+
+	const isVisible = useInView(carouselRef)
+
+	useKeypress('ArrowRight', () => {
+		if (index + 1 < images.length && isVisible) {
+			setIndex(index + 1)
+		}
+	})
+
+	useKeypress('ArrowLeft', () => {
+		if (index > 0 && isVisible) {
+			setIndex(i => i - 1)
+		}
+	})
 
 	const margin = 5
 	const transition: Transition = { duration: 0.7, ease: [0.32, 0.72, 0, 1] }
@@ -40,18 +57,19 @@ export default function Carousel({
 		if (x > DRAG_BUFFER && index > 0) {
 			const nextIndex = index - 1
 			setIndex(nextIndex)
-			console.log('index', index)
 		}
 		if (x <= -DRAG_BUFFER && index < images.length - 1) {
 			const nextIndex = index + 1
 			setIndex(nextIndex)
-			console.log('index', index)
 		}
 	}
 
 	return (
 		<MotionConfig transition={transition}>
-			<div className={cn('relative isolate w-full', className)}>
+			<div
+				className={cn('relative isolate w-full', className)}
+				ref={carouselRef}
+			>
 				<div className="pb-1/2 h-96 w-full overflow-hidden p-px">
 					<div className="relative z-10 flex h-96">
 						<motion.div
@@ -62,6 +80,7 @@ export default function Carousel({
 							className="relative flex w-3/4 pb-1 sm:w-[calc(50%-(1.25%))]"
 							style={{ x: dragX }}
 							onDragEnd={onDragEnd}
+							whileDrag={{ cursor: 'grabbing' }}
 						>
 							{images.map((image, i) => (
 								<div
@@ -73,7 +92,7 @@ export default function Carousel({
 										onClick={() => {
 											setIndex(i)
 										}}
-										className="w-full grow overflow-hidden"
+										className="w-full grow cursor-auto overflow-hidden"
 									>
 										<img
 											src={image.src}

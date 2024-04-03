@@ -44,7 +44,18 @@ const CAROUSEL_1_IMAGES: CarouselImage[] = [
 		alt: 'Spine AI Website Design',
 		link: 'https://getspine.ai',
 	},
-
+	{
+		title: 'Red Bourbon',
+		src: '/img/tw/carousel-1/red-bourbon.webp',
+		alt: 'Red Bourbon Website Design',
+		link: 'https://redbourbon.co',
+	},
+	{
+		title: 'Zubtitle',
+		src: '/img/tw/carousel-1/zubtitle.webp',
+		alt: 'Zubtitle Website Design',
+		link: 'https://zubtitle-showcase.webflow.io/',
+	},
 	{
 		title: 'Powered by Tiny',
 		src: '/img/tw/carousel-1/powered-by-tiny.webp',
@@ -65,6 +76,18 @@ export const meta: MetaFunction = () => {
 		{
 			name: 'description',
 			content: `Here's why I think I'd be a great addition to Tailwind's team`,
+		},
+		{
+			property: 'og:title',
+			content: 'Abraham x TailwindLabs – Abraham Aguilera',
+		},
+		{
+			property: 'og:description',
+			content: `Here's why I think I'd be a great addition to Tailwind's team`,
+		},
+		{
+			property: 'og:image',
+			content: '/img/tw/tw-x-abraham–og.webp',
 		},
 	]
 }
@@ -203,10 +226,10 @@ export default function TailwindRoute() {
 					<BonusSection reader={reader} />
 				</div>
 
-				<div className="mx-auto mt-12 max-w-screen-sm text-balance text-center text-sm text-gray-600">
+				{/* <div className="mx-auto mt-12 max-w-screen-sm text-balance text-center text-sm text-gray-600">
 					Disclaimer: Some parts of this page still need a liiiitle bit more
 					polish. Ran out of time to submit. Changes may happen!
-				</div>
+				</div> */}
 				<div className="fixed -bottom-4 -left-[10vw] z-40 h-28 w-[120vw] bg-gradient-to-t from-gray-950 blur-sm" />
 			</section>
 		</main>
