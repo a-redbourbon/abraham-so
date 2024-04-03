@@ -1,10 +1,15 @@
+import { Disclosure, Transition } from '@headlessui/react'
+import { BoltIcon, ChevronDownIcon } from '@heroicons/react/20/solid'
+import { type MetaFunction } from '@remix-run/node'
 import { useSearchParams } from '@remix-run/react'
 import clsx from 'clsx'
 import { useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
+import LiteYouTubeEmbed from 'react-lite-youtube-embed'
 import Carousel, { type CarouselImage } from '#app/components/carousel'
 import { XMark } from '#app/components/icons'
 import ReaderPicker from '#app/components/tailwind-application/reader-picker'
+import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
 
 export const READERS = {
 	adam: {
@@ -39,7 +44,18 @@ const CAROUSEL_1_IMAGES: CarouselImage[] = [
 		alt: 'Spine AI Website Design',
 		link: 'https://getspine.ai',
 	},
-
+	{
+		title: 'Red Bourbon',
+		src: '/img/tw/carousel-1/red-bourbon.webp',
+		alt: 'Red Bourbon Website Design',
+		link: 'https://redbourbon.co',
+	},
+	{
+		title: 'Zubtitle',
+		src: '/img/tw/carousel-1/zubtitle.webp',
+		alt: 'Zubtitle Website Design',
+		link: 'https://zubtitle-showcase.webflow.io/',
+	},
 	{
 		title: 'Powered by Tiny',
 		src: '/img/tw/carousel-1/powered-by-tiny.webp',
@@ -53,6 +69,28 @@ const CAROUSEL_1_IMAGES: CarouselImage[] = [
 		link: 'https://churnkey.co/reports/state-of-retention-2024/',
 	},
 ]
+
+export const meta: MetaFunction = () => {
+	return [
+		{ title: 'Abraham x TailwindLabs – Abraham Aguilera' },
+		{
+			name: 'description',
+			content: `Here's why I think I'd be a great addition to Tailwind's team`,
+		},
+		{
+			property: 'og:title',
+			content: 'Abraham x TailwindLabs – Abraham Aguilera',
+		},
+		{
+			property: 'og:description',
+			content: `Here's why I think I'd be a great addition to Tailwind's team`,
+		},
+		{
+			property: 'og:image',
+			content: '/img/tw/tw-x-abraham–og.webp',
+		},
+	]
+}
 
 export type Reader = keyof typeof READERS
 
@@ -72,7 +110,7 @@ export default function TailwindRoute() {
 		<main className="relative min-h-screen w-full px-3 text-white">
 			<header className="sticky top-0 z-0 -ml-3 flex h-[40vh] min-h-72 w-dvw items-center justify-center overflow-hidden md:overflow-visible">
 				{
-					<div className="absolute -top-24 left-1/2 w-[768px] -translate-x-1/2 md:-top-56 md:w-[1440px]">
+					<div className="absolute -top-24 left-1/2 w-[768px] -translate-x-1/2 opacity-40 saturate-0 md:-top-56 md:w-[1440px]">
 						<img
 							src="/img/tw-logo-bg.webp"
 							alt=""
@@ -94,7 +132,7 @@ export default function TailwindRoute() {
 					)}
 				>
 					<h1
-						className="bg-gradient-to-b from-white to-gray-300 bg-clip-text font-display text-4xl font-normal leading-none text-transparent drop-shadow-[0_0px_1px_rgb(0_0_0)] md:text-5xl
+						className="bg-gradient-to-b from-white to-gray-300 bg-clip-text font-display text-4xl font-normal leading-none text-transparent drop-shadow-[0_0px_1px_rgb(0_0_0)] md:text-4xl
 "
 					>
 						Abraham
@@ -118,17 +156,23 @@ export default function TailwindRoute() {
 				<div className="sticky top-6 z-20 flex justify-center">
 					<ReaderPicker reader={reader} setReader={setReader} />
 				</div>
-				<div className="prose prose-zinc relative z-10 m-auto mt-6  w-full max-w-screen-md rounded-md bg-white p-6 shadow-[0_0_0_1px_rgb(0_0_0_/_5%)_,_0_1px_2px_0_rgb(0_0_0_/_10%)_,_inset_0_0.5px_0_0.5px_rgb(255_255_255_/_5%),_inset_0_-1px_3px_0px_rgb(0_0_0_/_5%)] dark:prose-invert prose-headings:font-display prose-headings:text-xl prose-headings:font-normal dark:bg-gray-900 md:p-12">
+				<div className="prose prose-zinc relative z-10 m-auto mt-6  w-full max-w-screen-md rounded-lg bg-white p-6 shadow-[0_0_0_1px_rgb(0_0_0_/_5%)_,_0_1px_2px_0_rgb(0_0_0_/_10%)_,_inset_0_0.5px_0_0.5px_rgb(255_255_255_/_5%),_inset_0_-1px_3px_0px_rgb(0_0_0_/_5%)] dark:prose-invert prose-headings:font-display prose-headings:text-xl prose-headings:font-normal dark:bg-gray-900 sm:p-12">
 					<p>Hey {READERS[reader].name}!</p>
 					<p>
 						Rather than boring you with a formal intro and a Linkedin do-over
 						with all my job titles, I thought I'd make a short video to
 						introduce myself:
 					</p>
-					<span>[video]</span>
+					<LiteYouTubeEmbed
+						id="Kaixc_9mclc"
+						title="Abraham's application to Tailwind"
+						poster="maxresdefault"
+						webp={true}
+						wrapperClass=" yt-lite rounded-md shadow-lg ring-1 ring-white/10 overflow-hidden"
+					/>
 					<p>
-						Humble-bragging in video is too awkward, though. So, here are a few
-						reasons why I think I'd make a great addition to Tailwind's team:
+						With that out fo the way, here are a few reasons why I think I'd
+						make a great addition to Tailwind's team:
 					</p>
 					<h2>1. Tailwind got me to stop using Figma</h2>
 					<p>
@@ -136,15 +180,21 @@ export default function TailwindRoute() {
 						the past 12 years, Tailwind helped me see the light. For an upcoming
 						app I've been building, I've done all the design with Tailwind, in
 						code. And it's awesome.
-						<p>Figma has been struggling to catch up ever since.</p>
 					</p>
+					<p>Figma has been struggling to catch up ever since.</p>
 					<Section1Graphics />
+					<p>
+						As a Design Engineer for Tailwind, I'd be able to help more
+						designers take the plunge, and contribute to advance the tooling and
+						resources to ease the transition.
+					</p>
 					<h2>2. I've done *a lot* of things</h2>
 					<p>
 						I have an unconventional trajectory as a founder and a consultant.
 						I've worked in all areas of marketing, design, visual development,
 						and now code. I even ran a Youtube channel for a bit!
 					</p>
+					<Carousel images={CAROUSEL_1_IMAGES} className="not-prose my-12" />
 					<p>
 						So, besides having strong suspicions of ADHD, I'm a generalist with
 						experience across multiple industries (health, tech, finance,
@@ -164,33 +214,22 @@ export default function TailwindRoute() {
 							frontend development.
 						</li>
 					</ul>
+
 					<h2>3. A strong passion for craft</h2>
 					<p>
-						This one is a bit more esoteric and hard to explain, but I hope it
-						comes through on this page. I'm grateful for the work you've done
-						with Tailwind, and helping you create the tools that make building
-						high-quality looking sites _this_ enjoyable would be a highlight in
-						my career.
+						The same as I've felt across every touchpoint with the Tailwind
+						brand. Your love of craftmanship and care for even the smallest
+						detail shines across every product you crate, and that's the type of
+						work I want to be doing every day.
 					</p>
-					<h2>Bonus: Why would enjoy working with me</h2>
-					<p>
-						<strong>Adam:</strong> I like to pick up heavy things too. We can
-						riff about nerdy lifting science stuff or bumper plates brands.
-						<strong>Steve:</strong> We're design soulmates. Here's my platform
-						next to Catalyst's latest dashboards 🔥 [pics of plot & catalyst
-						previews]
-						<strong>Team:</strong> I don't know you yet, but I can promise you
-						this: If you have an idea and I can help you bring it to life with
-						design (or code), I'll help you get it done or die trying. Just
-						kidding, but I will try very hard.
-					</p>
+					<hr />
+					<BonusSection reader={reader} />
 				</div>
-				<div className="mx-auto my-12 w-full max-w-screen-md overflow-hidden md:overflow-visible">
-					<h2 className="mb-6 text-center font-display text-2xl">
-						Some recent projects
-					</h2>
-					<Carousel images={CAROUSEL_1_IMAGES} className="" />
-				</div>
+
+				{/* <div className="mx-auto mt-12 max-w-screen-sm text-balance text-center text-sm text-gray-600">
+					Disclaimer: Some parts of this page still need a liiiitle bit more
+					polish. Ran out of time to submit. Changes may happen!
+				</div> */}
 				<div className="fixed -bottom-4 -left-[10vw] z-40 h-28 w-[120vw] bg-gradient-to-t from-gray-950 blur-sm" />
 			</section>
 		</main>
@@ -198,5 +237,117 @@ export default function TailwindRoute() {
 }
 
 function Section1Graphics() {
-	return <div className="flex w-full flex-col gap-4 md:flex-row"></div>
+	return (
+		<div className=" relative isolate flex w-full gap-4">
+			<div className="relative z-0">
+				<img
+					loading="lazy"
+					src="/img/tw/app-preview.webp"
+					alt="Plot App preview screenshot"
+					className=" w-full rounded-sm shadow-lg ring-4 ring-white/10"
+				/>
+			</div>
+			<div className="not-prose absolute -right-8 -top-8 z-10 mt-6 w-48 rotate-3 rounded bg-gray-800 p-3 text-xs shadow-sm ring-1 ring-white/10">
+				Now whenever I need to use Figma I'm stuck with editing screenshots of
+				the app. Thanks a lot Tailwind... I think?
+			</div>
+		</div>
+	)
+}
+
+function BonusSection({ reader }: { reader: Reader }) {
+	return (
+		<div className="pb-12 sm:pb-4">
+			<Disclosure>
+				<Disclosure.Button className="items-top flex w-full justify-between gap-2 ">
+					<div className="items-top flex gap-2 prose-h2:m-0">
+						<div className="flex size-7 shrink-0 items-center justify-center rounded-full border border-gray-800 bg-white/[2%]">
+							<BoltIcon className="size-4 shrink-0 text-gray-500 drop-shadow-sm" />
+						</div>
+						<h2 className="text-left">
+							Bonus: Why would{' '}
+							{reader === 'team' ? 'Team Tailwind' : READERS[reader].name} enjoy
+							working with me?
+						</h2>
+					</div>
+					<ChevronDownIcon className="size-6 shrink-0 text-gray-500 transition-transform duration-200 ui-open:-rotate-180" />
+				</Disclosure.Button>
+				<Transition
+					enter="transition duration-100 ease-out"
+					enterFrom="transform  opacity-0"
+					enterTo="transform opacity-100"
+					leave="transition duration-75 ease-in"
+					leaveFrom="transform opacity-100"
+					leaveTo="transform  opacity-0"
+				>
+					<Disclosure.Panel className="opacity-0 transition-opacity duration-300 ui-open:opacity-100">
+						<BonusSectionContent reader={reader} />
+					</Disclosure.Panel>
+				</Transition>
+			</Disclosure>
+		</div>
+	)
+}
+
+function BonusSectionContent({ reader }: { reader: Reader }) {
+	switch (reader) {
+		case 'adam':
+			return (
+				<div className="relative">
+					<p>
+						I like to pick up heavy things, too. We can riff about nerdy lifting
+						science stuff or bumper plates brands for days.
+					</p>
+					<figure className="relative mx-auto w-4/5 ">
+						<img
+							loading="lazy"
+							src="/img/tw/lifting.webp"
+							alt="man doing squats"
+							className="rounded shadow-sm ring-4 ring-white/10"
+						/>
+						<figcaption className="absolute -left-8 -top-8 z-10 mt-6 w-48 -rotate-6 rounded bg-gray-800 p-3 text-xs shadow-sm ring-1 ring-white/10">
+							Dying while trying to get out of the hole. Coach wasn't impressed.
+						</figcaption>
+					</figure>
+				</div>
+			)
+		case 'steve':
+			return (
+				<>
+					<p>
+						Saw that you rock a pothos in the office! I'm a plant dad, too. We
+						can swap tips on how to keep them alive.
+					</p>
+					<div className="mt-10 flex justify-center -space-x-6">
+						<figure className="relative mt-1 w-72 -rotate-3">
+							<img
+								loading="lazy"
+								src="/img/tw/office.webp"
+								alt="desk with a pothos plant hanging from a shelf"
+								className="rounded shadow-sm ring-4 ring-white/10 "
+							/>
+						</figure>
+						<figure className="relative w-72 rotate-2">
+							<img
+								loading="lazy"
+								src="/img/tw/monstera.webp"
+								alt="monstera plant in a pot"
+								className="rounded shadow-lg ring-4 ring-white/10"
+							/>
+						</figure>
+					</div>
+				</>
+			)
+		case 'team':
+			return (
+				<>
+					<p>I don't know you guys yet, but I can promise you this:</p>
+					<p>
+						If you have an idea and I can help you bring it to life with design
+						(or code), I'll help you get it done or die trying.
+					</p>
+					<p>Just kidding. But I will try very hard, though.</p>
+				</>
+			)
+	}
 }

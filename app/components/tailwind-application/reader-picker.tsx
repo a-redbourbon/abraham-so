@@ -7,7 +7,7 @@ import {
 	motion,
 	type Transition,
 } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import useMeasure from 'react-use-measure'
 import {
 	READERS,
@@ -23,14 +23,35 @@ export default function ReaderPicker({
 }) {
 	const [open, setOpen] = useState<boolean>(false)
 	const [ref, bounds] = useMeasure()
+	const pickerRef = useRef<HTMLDivElement>(null)
 	const navigate = useNavigate()
+
+	useEffect(() => {
+		function handleClick(event: MouseEvent) {
+			if (open && !pickerRef.current?.contains(event.target as Node)) {
+				setOpen(false)
+			}
+		}
+
+		document.addEventListener('click', handleClick)
+		return () => document.removeEventListener('click', handleClick)
+		//eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
+	useEffect(() => {
+		function handleEscape(event: KeyboardEvent) {
+			if (event.key === 'Escape') {
+				setOpen(false)
+			}
+		}
+		document.addEventListener('keydown', handleEscape)
+
+		return () => document.removeEventListener('keydown', handleEscape)
+	}, [])
 
 	function handleChange(reader: Reader) {
 		setReader(reader)
 		setOpen(false)
-		navigate(`/tailwind-application?reader=${reader}`, {
-			preventScrollReset: true,
-		})
 	}
 
 	const transition: Transition = {
@@ -40,7 +61,7 @@ export default function ReaderPicker({
 	}
 
 	return (
-		<div className="relative h-7 overflow-visible">
+		<div className="relative h-7 overflow-visible" ref={pickerRef}>
 			<MotionConfig transition={transition}>
 				<div className=" absolute left-1/2 top-0 -translate-x-1/2 overflow-hidden rounded-full bg-gray-800 p-1 text-sm text-gray-200 shadow-popover ring-1 ring-white/15">
 					<motion.div
@@ -54,6 +75,11 @@ export default function ReaderPicker({
 							type: 'spring',
 							bounce: 0,
 							duration: transition.duration,
+						}}
+						onAnimationComplete={() => {
+							navigate(`/tailwind-application?reader=${reader}`, {
+								preventScrollReset: true,
+							})
 						}}
 					>
 						<div ref={ref} className="flex flex-col items-center justify-start">

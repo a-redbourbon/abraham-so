@@ -26,6 +26,7 @@ export default {
 		radixPlugin,
 		addVariablesForColors,
 		require('@tailwindcss/typography'),
+		require('@headlessui/tailwindcss'),
 	],
 } satisfies Config
 
