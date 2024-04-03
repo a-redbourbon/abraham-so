@@ -4,9 +4,11 @@ import { useSearchParams } from '@remix-run/react'
 import clsx from 'clsx'
 import { useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
+import LiteYouTubeEmbed from 'react-lite-youtube-embed'
 import Carousel, { type CarouselImage } from '#app/components/carousel'
 import { XMark } from '#app/components/icons'
 import ReaderPicker from '#app/components/tailwind-application/reader-picker'
+import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
 
 export const READERS = {
 	adam: {
@@ -127,7 +129,13 @@ export default function TailwindRoute() {
 						with all my job titles, I thought I'd make a short video to
 						introduce myself:
 					</p>
-					<span>[video]</span>
+					<LiteYouTubeEmbed
+						id="Kaixc_9mclc"
+						title="Abraham's application to Tailwind"
+						poster="maxresdefault"
+						webp={true}
+						wrapperClass=" yt-lite rounded-md shadow-lg ring-1 ring-white/10 overflow-hidden"
+					/>
 					<p>
 						With that out fo the way, here are a few reasons why I think I'd
 						make a great addition to Tailwind's team:
@@ -229,7 +237,7 @@ function BonusSection({ reader }: { reader: Reader }) {
 							working with me?
 						</h2>
 					</div>
-					<ChevronDownIcon className="ui-open:-rotate-180 size-6 shrink-0 text-gray-500 transition-transform duration-200" />
+					<ChevronDownIcon className="size-6 shrink-0 text-gray-500 transition-transform duration-200 ui-open:-rotate-180" />
 				</Disclosure.Button>
 				<Transition
 					enter="transition duration-100 ease-out"
@@ -239,7 +247,7 @@ function BonusSection({ reader }: { reader: Reader }) {
 					leaveFrom="transform opacity-100"
 					leaveTo="transform  opacity-0"
 				>
-					<Disclosure.Panel className="ui-open:opacity-100 opacity-0 transition-opacity duration-300">
+					<Disclosure.Panel className="opacity-0 transition-opacity duration-300 ui-open:opacity-100">
 						<BonusSectionContent reader={reader} />
 					</Disclosure.Panel>
 				</Transition>
