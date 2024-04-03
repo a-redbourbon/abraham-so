@@ -219,8 +219,8 @@ export default function TailwindRoute() {
 					<p>
 						The same as I've felt across every touchpoint with the Tailwind
 						brand. Your love of craftmanship and care for even the smallest
-						detail shines across every product you crate, and that's the type of
-						work I want to be doing every day.
+						detail shines across every product you create, and that's the type
+						of work I want to be doing every day.
 					</p>
 					<hr />
 					<BonusSection reader={reader} />
@@ -230,7 +230,7 @@ export default function TailwindRoute() {
 					Disclaimer: Some parts of this page still need a liiiitle bit more
 					polish. Ran out of time to submit. Changes may happen!
 				</div> */}
-				<div className="fixed -bottom-4 -left-[10vw] z-40 h-28 w-[120vw] bg-gradient-to-t from-gray-950 blur-sm" />
+				<div className="fixed -left-[10vw] bottom-0 z-40 h-28 w-[120vw] bg-gradient-to-t from-gray-950 " />
 			</section>
 		</main>
 	)

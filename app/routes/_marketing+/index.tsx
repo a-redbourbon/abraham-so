@@ -38,7 +38,7 @@ export default function Index() {
 								2015-2018
 							</dt>
 							<dd className="mt-1  leading-6 text-text-primary sm:col-span-4 sm:mt-0">
-								Founder at Soco Adventures.{' '}
+								Founder & CMO at Soco Adventures.{' '}
 								<span className="text-text-secondary">
 									Venezuela's largest adventure travel agency.
 								</span>
@@ -46,7 +46,7 @@ export default function Index() {
 						</div>
 						<div className="py-3 sm:grid sm:grid-cols-5 sm:gap-4 sm:px-0">
 							<dt className=" text-sm leading-6 text-text-secondary">
-								2011-2015
+								2013-2016
 							</dt>
 							<dd className="mt-1  leading-6 text-text-primary sm:col-span-4 sm:mt-0">
 								Founder at Fitness Playbook.
